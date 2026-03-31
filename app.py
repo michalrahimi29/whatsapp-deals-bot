@@ -179,15 +179,19 @@ def admin_stores():
 with app.app_context():
     init_db()
 
-# Start Telegram bot in background thread
-start_telegram_bot_thread()
-
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))
     debug = os.environ.get("FLASK_DEBUG", "1") == "1"
+
+    # Start Telegram bot in background thread
+    start_telegram_bot_thread()
+
     print(f"\n{'='*50}")
     print(f"  Deals Bot Server")
     print(f"  Web UI: http://localhost:{port}")
     print(f"  Telegram Bot: Running in background")
     print(f"{'='*50}\n")
-    app.run(host="0.0.0.0", port=port, debug=debug, use_reloader=False)
+    app.run(host="0.0.0.0", port=port, debug=False, use_reloader=False)
+else:
+    # When imported by gunicorn or other WSGI server
+    start_telegram_bot_thread()
