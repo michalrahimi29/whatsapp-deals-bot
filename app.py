@@ -1,30 +1,14 @@
 import os
 from flask import Flask, request, session, redirect, url_for, render_template, flash
-from twilio.twiml.messaging_response import MessagingResponse
 from dotenv import load_dotenv
 
 from database import get_db, init_db, get_or_create_user
-from whatsapp_handler import handle_whatsapp_message
+from telegram_bot import start_telegram_bot_thread
 
 load_dotenv()
 
 app = Flask(__name__)
 app.secret_key = os.environ.get("SECRET_KEY", "dev-secret-key-change-in-production")
-
-
-# --- WhatsApp Webhook ---
-
-@app.route("/webhook", methods=["POST"])
-def whatsapp_webhook():
-    """Twilio WhatsApp webhook endpoint."""
-    incoming_msg = request.values.get("Body", "").strip()
-    from_number = request.values.get("From", "").replace("whatsapp:", "")
-
-    response_text = handle_whatsapp_message(from_number, incoming_msg)
-
-    resp = MessagingResponse()
-    resp.message(response_text)
-    return str(resp)
 
 
 # --- Web UI Routes ---
@@ -195,12 +179,15 @@ def admin_stores():
 with app.app_context():
     init_db()
 
+# Start Telegram bot in background thread
+start_telegram_bot_thread()
+
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))
     debug = os.environ.get("FLASK_DEBUG", "1") == "1"
     print(f"\n{'='*50}")
-    print(f"  WhatsApp Deals Bot Server")
+    print(f"  Deals Bot Server")
     print(f"  Web UI: http://localhost:{port}")
-    print(f"  WhatsApp Webhook: http://localhost:{port}/webhook")
+    print(f"  Telegram Bot: Running in background")
     print(f"{'='*50}\n")
-    app.run(host="0.0.0.0", port=port, debug=debug)
+    app.run(host="0.0.0.0", port=port, debug=debug, use_reloader=False)

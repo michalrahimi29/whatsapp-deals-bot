@@ -1,15 +1,13 @@
 services:
   - type: web
-    name: whatsapp-deals-bot
+    name: deals-bot
     runtime: python
     buildCommand: pip install -r requirements.txt && python seed_data.py
     startCommand: gunicorn app:app --bind 0.0.0.0:$PORT
     envVars:
       - key: SECRET_KEY
         generateValue: true
-      - key: TWILIO_ACCOUNT_SID
-        sync: false
-      - key: TWILIO_AUTH_TOKEN
+      - key: TELEGRAM_BOT_TOKEN
         sync: false
       - key: WEB_BASE_URL
         sync: false
