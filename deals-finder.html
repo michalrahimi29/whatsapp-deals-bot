@@ -1,0 +1,1919 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Deals Finder - מוצא ההטבות</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --navy: #1a1a2e;
+  --navy-light: #16213e;
+  --teal: #16a085;
+  --teal-light: #1abc9c;
+  --teal-dark: #0e8c73;
+  --white: #ffffff;
+  --gray-50: #f8f9fa;
+  --gray-100: #f1f3f5;
+  --gray-200: #e9ecef;
+  --gray-300: #dee2e6;
+  --gray-400: #ced4da;
+  --gray-500: #adb5bd;
+  --gray-600: #868e96;
+  --gray-700: #495057;
+  --gray-800: #343a40;
+  --gray-900: #212529;
+  --cat-restaurant: #e67e22;
+  --cat-fashion: #e84393;
+  --cat-baby: #74b9ff;
+  --cat-home: #00b894;
+  --cat-beauty: #a55eea;
+  --cat-electronics: #2d3436;
+  --cat-supermarket: #f9ca24;
+  --gold: #f39c12;
+  --personal-bg: #e8f8f5;
+  --personal-border: #16a085;
+  --shadow-sm: 0 1px 3px rgba(0,0,0,0.08);
+  --shadow-md: 0 4px 12px rgba(0,0,0,0.1);
+  --shadow-lg: 0 8px 30px rgba(0,0,0,0.12);
+  --shadow-xl: 0 20px 60px rgba(0,0,0,0.15);
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 20px;
+  --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+body {
+  font-family: 'Rubik', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  background: var(--gray-100);
+  color: var(--gray-800);
+  min-height: 100vh;
+  line-height: 1.6;
+}
+
+/* Header */
+.header {
+  background: linear-gradient(135deg, var(--navy) 0%, var(--navy-light) 100%);
+  color: var(--white);
+  padding: 1.5rem 1rem 2.5rem;
+  position: relative;
+  overflow: hidden;
+}
+.header::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  right: -20%;
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(circle, rgba(22,160,133,0.15) 0%, transparent 70%);
+  border-radius: 50%;
+}
+.header::after {
+  content: '';
+  position: absolute;
+  bottom: -60%;
+  left: -10%;
+  width: 300px;
+  height: 300px;
+  background: radial-gradient(circle, rgba(22,160,133,0.1) 0%, transparent 70%);
+  border-radius: 50%;
+}
+.header-content {
+  max-width: 800px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+}
+.header-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+.logo {
+  font-size: 1.6rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.logo-icon {
+  font-size: 1.8rem;
+}
+.settings-btn {
+  background: rgba(255,255,255,0.12);
+  border: 1px solid rgba(255,255,255,0.2);
+  color: var(--white);
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 1.3rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: var(--transition);
+  backdrop-filter: blur(10px);
+}
+.settings-btn:hover {
+  background: rgba(255,255,255,0.22);
+  transform: rotate(30deg);
+}
+.settings-btn.active {
+  background: var(--teal);
+  border-color: var(--teal);
+}
+.subtitle {
+  font-size: 0.95rem;
+  color: rgba(255,255,255,0.7);
+  font-weight: 300;
+  margin-bottom: 1.5rem;
+}
+.search-wrapper {
+  position: relative;
+}
+.search-input {
+  width: 100%;
+  padding: 1rem 1.2rem 1rem 3rem;
+  font-size: 1.1rem;
+  font-family: 'Rubik', sans-serif;
+  border: 2px solid transparent;
+  border-radius: var(--radius-lg);
+  background: var(--white);
+  color: var(--gray-800);
+  outline: none;
+  transition: var(--transition);
+  box-shadow: var(--shadow-lg);
+}
+.search-input::placeholder { color: var(--gray-500); }
+.search-input:focus {
+  border-color: var(--teal);
+  box-shadow: var(--shadow-xl), 0 0 0 4px rgba(22,160,133,0.15);
+}
+.search-icon {
+  position: absolute;
+  left: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 1.2rem;
+  color: var(--gray-500);
+  pointer-events: none;
+}
+.search-clear {
+  position: absolute;
+  right: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  background: var(--gray-200);
+  border: none;
+  color: var(--gray-600);
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 0.9rem;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  transition: var(--transition);
+}
+.search-clear:hover { background: var(--gray-300); }
+.search-clear.visible { display: flex; }
+
+/* Personalization badge */
+.personal-badge {
+  display: none;
+  align-items: center;
+  gap: 0.4rem;
+  margin-top: 0.8rem;
+  padding: 0.4rem 0.8rem;
+  background: rgba(22,160,133,0.2);
+  border-radius: 20px;
+  font-size: 0.8rem;
+  color: var(--teal-light);
+  width: fit-content;
+}
+.personal-badge.visible { display: flex; }
+.personal-badge span { font-size: 0.9rem; }
+
+/* Main content */
+.main {
+  max-width: 800px;
+  margin: -1rem auto 2rem;
+  padding: 0 1rem;
+  position: relative;
+  z-index: 2;
+}
+
+/* Settings panel */
+.settings-panel {
+  background: var(--white);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+  margin-bottom: 1.5rem;
+  overflow: hidden;
+  max-height: 0;
+  opacity: 0;
+  transition: max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease, margin 0.3s ease;
+}
+.settings-panel.open {
+  max-height: 2000px;
+  opacity: 1;
+  margin-bottom: 1.5rem;
+}
+.settings-header {
+  padding: 1.2rem 1.5rem;
+  border-bottom: 1px solid var(--gray-200);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.settings-header h2 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--gray-800);
+}
+.settings-body { padding: 0.5rem 0; }
+
+.settings-section {
+  border-bottom: 1px solid var(--gray-100);
+}
+.settings-section:last-child { border-bottom: none; }
+.section-toggle {
+  width: 100%;
+  padding: 1rem 1.5rem;
+  background: none;
+  border: none;
+  font-family: 'Rubik', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: var(--gray-700);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  transition: var(--transition);
+}
+.section-toggle:hover { background: var(--gray-50); }
+.section-toggle .label { display: flex; align-items: center; gap: 0.5rem; }
+.section-toggle .count {
+  font-size: 0.75rem;
+  background: var(--teal);
+  color: var(--white);
+  padding: 0.15rem 0.5rem;
+  border-radius: 10px;
+  font-weight: 600;
+}
+.section-toggle .arrow {
+  transition: var(--transition);
+  font-size: 0.8rem;
+  color: var(--gray-500);
+}
+.section-toggle.expanded .arrow { transform: rotate(180deg); }
+.section-content {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.section-content.open { max-height: 800px; }
+.checkbox-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 0.3rem;
+  padding: 0 1rem 1rem;
+}
+.checkbox-item {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.5rem 0.6rem;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: var(--transition);
+  user-select: none;
+}
+.checkbox-item:hover { background: var(--gray-50); }
+.checkbox-item input[type="checkbox"] {
+  accent-color: var(--teal);
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+.checkbox-item label {
+  font-size: 0.85rem;
+  color: var(--gray-700);
+  cursor: pointer;
+  line-height: 1.3;
+}
+
+/* Results */
+.results-info {
+  padding: 0.5rem 0 1rem;
+  font-size: 0.9rem;
+  color: var(--gray-600);
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+/* Store cards */
+.store-card {
+  background: var(--white);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+  margin-bottom: 1rem;
+  overflow: hidden;
+  animation: cardIn 0.4s ease forwards;
+  opacity: 0;
+  transform: translateY(12px);
+}
+@keyframes cardIn {
+  to { opacity: 1; transform: translateY(0); }
+}
+.card-header {
+  padding: 1.2rem 1.5rem 0.8rem;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+}
+.store-name {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--gray-900);
+  line-height: 1.3;
+}
+.category-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.25rem 0.7rem;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--white);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.cat-restaurant { background: var(--cat-restaurant); }
+.cat-fashion { background: var(--cat-fashion); }
+.cat-baby { background: var(--cat-baby); color: var(--gray-800); }
+.cat-home { background: var(--cat-home); }
+.cat-beauty { background: var(--cat-beauty); }
+.cat-electronics { background: var(--cat-electronics); }
+.cat-supermarket { background: var(--cat-supermarket); color: var(--gray-800); }
+
+.card-body { padding: 0 1.5rem 1.2rem; }
+
+/* Personal deals highlight */
+.personal-section {
+  background: linear-gradient(135deg, var(--personal-bg) 0%, #d1f2eb 100%);
+  border: 2px solid var(--personal-border);
+  border-radius: var(--radius-md);
+  padding: 1rem 1.2rem;
+  margin-bottom: 1rem;
+}
+.personal-section-title {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--teal-dark);
+  margin-bottom: 0.6rem;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+/* Deal sections */
+.deal-section {
+  margin-bottom: 0.8rem;
+}
+.deal-section:last-child { margin-bottom: 0; }
+.deal-section-title {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--gray-600);
+  margin-bottom: 0.4rem;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+.deal-list { list-style: none; }
+.deal-item {
+  padding: 0.35rem 0;
+  font-size: 0.88rem;
+  color: var(--gray-700);
+  display: flex;
+  align-items: flex-start;
+  gap: 0.4rem;
+  line-height: 1.5;
+}
+.deal-item .deal-name {
+  font-weight: 500;
+  color: var(--gray-800);
+  flex-shrink: 0;
+}
+.deal-item .deal-desc {
+  color: var(--gray-600);
+}
+.deal-item .deal-note {
+  font-size: 0.78rem;
+  color: var(--gray-500);
+  font-style: italic;
+}
+.deal-item .deal-dot {
+  color: var(--gray-400);
+  margin: 0 0.15rem;
+}
+.gift-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.2rem 0.6rem;
+  background: var(--gray-100);
+  border-radius: 6px;
+  font-size: 0.8rem;
+  color: var(--gray-700);
+  margin: 0.15rem;
+  line-height: 1.4;
+}
+.gift-tag.personal {
+  background: #d5f5e3;
+  color: #0e6655;
+  font-weight: 500;
+  border: 1px solid #a3e4d7;
+}
+.gift-tags-wrap {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.2rem;
+  margin-top: 0.3rem;
+}
+
+/* Empty / initial state */
+.empty-state {
+  text-align: center;
+  padding: 3rem 1.5rem;
+}
+.empty-icon {
+  font-size: 3.5rem;
+  margin-bottom: 1rem;
+}
+.empty-title {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--gray-700);
+  margin-bottom: 0.5rem;
+}
+.empty-desc {
+  font-size: 0.9rem;
+  color: var(--gray-500);
+  max-width: 360px;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+
+/* Popular stores */
+.popular-section {
+  margin-top: 1.5rem;
+}
+.popular-title {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--gray-600);
+  margin-bottom: 0.8rem;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+.popular-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 0.5rem;
+}
+.popular-chip {
+  background: var(--white);
+  border: 1px solid var(--gray-200);
+  border-radius: var(--radius-sm);
+  padding: 0.6rem 0.8rem;
+  text-align: center;
+  cursor: pointer;
+  transition: var(--transition);
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--gray-700);
+}
+.popular-chip:hover {
+  border-color: var(--teal);
+  color: var(--teal);
+  box-shadow: var(--shadow-sm);
+  transform: translateY(-1px);
+}
+
+/* Separator line in deal sections */
+.section-divider {
+  height: 1px;
+  background: var(--gray-200);
+  margin: 0.6rem 0;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  .header { padding: 1.2rem 0.8rem 2rem; }
+  .logo { font-size: 1.3rem; }
+  .search-input { font-size: 1rem; padding: 0.9rem 1rem 0.9rem 2.6rem; }
+  .main { padding: 0 0.7rem; }
+  .card-header { padding: 1rem 1.2rem 0.6rem; flex-wrap: wrap; }
+  .card-body { padding: 0 1.2rem 1rem; }
+  .store-name { font-size: 1.15rem; }
+  .checkbox-grid { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); }
+  .popular-grid { grid-template-columns: repeat(auto-fill, minmax(110px, 1fr)); }
+}
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: var(--gray-100); }
+::-webkit-scrollbar-thumb { background: var(--gray-400); border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: var(--gray-500); }
+
+/* Footer */
+.footer {
+  text-align: center;
+  padding: 2rem 1rem;
+  color: var(--gray-500);
+  font-size: 0.8rem;
+}
+</style>
+</head>
+<body>
+
+<header class="header">
+  <div class="header-content">
+    <div class="header-top">
+      <div class="logo">
+        <span class="logo-icon">🏷️</span>
+        <span>Deals Finder</span>
+      </div>
+      <button class="settings-btn" id="settingsBtn" title="הגדרות הכרטיסים שלי">⚙️</button>
+    </div>
+    <p class="subtitle">חפשו חנות או מסעדה וגלו את כל ההטבות - כרטיסי מתנה, הנחות אשראי ומועדוני צרכנות</p>
+    <div class="search-wrapper">
+      <input type="text" class="search-input" id="searchInput" placeholder="חפשו חנות או מסעדה..." autocomplete="off" autofocus>
+      <span class="search-icon">🔍</span>
+      <button class="search-clear" id="searchClear">✕</button>
+    </div>
+    <div class="personal-badge" id="personalBadge">
+      <span>✨</span> ההטבות מותאמות לכרטיסים שלך
+    </div>
+  </div>
+</header>
+
+<main class="main">
+  <!-- Settings Panel -->
+  <div class="settings-panel" id="settingsPanel">
+    <div class="settings-header">
+      <span>⚙️</span>
+      <h2>הכרטיסים והמועדונים שלי</h2>
+    </div>
+    <div class="settings-body">
+      <!-- Gift Cards -->
+      <div class="settings-section">
+        <button class="section-toggle" data-section="giftcards">
+          <span class="label">🎁 כרטיסי מתנה <span class="count" id="gcCount">0</span></span>
+          <span class="arrow">▼</span>
+        </button>
+        <div class="section-content" id="giftcards-content">
+          <div class="checkbox-grid" id="gcGrid"></div>
+        </div>
+      </div>
+      <!-- Credit Cards -->
+      <div class="settings-section">
+        <button class="section-toggle" data-section="creditcards">
+          <span class="label">💳 כרטיסי אשראי <span class="count" id="ccCount">0</span></span>
+          <span class="arrow">▼</span>
+        </button>
+        <div class="section-content" id="creditcards-content">
+          <div class="checkbox-grid" id="ccGrid"></div>
+        </div>
+      </div>
+      <!-- Consumer Clubs -->
+      <div class="settings-section">
+        <button class="section-toggle" data-section="clubs">
+          <span class="label">⭐ מועדוני צרכנות <span class="count" id="clubCount">0</span></span>
+          <span class="arrow">▼</span>
+        </button>
+        <div class="section-content" id="clubs-content">
+          <div class="checkbox-grid" id="clubGrid"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Results -->
+  <div id="results"></div>
+</main>
+
+<footer class="footer">Deals Finder &copy; 2025 &middot; כל המידע להמחשה בלבד</footer>
+
+<script>
+// =============================================
+// DATA
+// =============================================
+
+const GIFT_CARD_PLATFORMS = [
+  { id: 'buyme_all', name: 'BuyMe All', nameHe: 'ביימי אול' },
+  { id: 'buyme_baby', name: 'BuyMe Baby', nameHe: 'ביימי בייבי' },
+  { id: 'buyme_restaurant', name: 'BuyMe Restaurant', nameHe: 'ביימי מסעדות' },
+  { id: 'buyme_fashion', name: 'BuyMe Fashion', nameHe: 'ביימי אופנה' },
+  { id: 'buyme_home', name: 'BuyMe Home', nameHe: 'ביימי בית' },
+  { id: 'buyme_experience', name: 'BuyMe Experience', nameHe: 'ביימי חוויות' },
+  { id: 'buyme_beauty', name: 'BuyMe Beauty', nameHe: 'ביימי ביוטי' },
+  { id: 'tav_hazahav', name: 'Tav Hazahav', nameHe: 'תו הזהב' },
+  { id: 'dreamcard', name: 'Dreamcard', nameHe: 'Dreamcard' },
+  { id: 'colu', name: 'Colu', nameHe: 'קולו' },
+  { id: 'presto', name: 'Presto', nameHe: 'Presto' },
+  { id: 'lovecard', name: 'Lovecard', nameHe: 'Lovecard' },
+  { id: 'tenbis', name: '10bis / TenBis', nameHe: 'תן ביס' }
+];
+
+const CREDIT_CARDS = [
+  { id: 'cal_visa', name: 'Cal Visa', nameHe: 'כאל ויזה', bank: 'Cal' },
+  { id: 'cal_mastercard', name: 'Cal Mastercard', nameHe: 'Cal Mastercard', bank: 'Cal' },
+  { id: 'isracard', name: 'Isracard', nameHe: 'ישראכרט', bank: 'Isracard' },
+  { id: 'max_visa', name: 'Max Visa', nameHe: 'מקס', bank: 'Max' },
+  { id: 'max_mastercard', name: 'Max Mastercard', nameHe: 'Max Mastercard', bank: 'Max' },
+  { id: 'leumi_card', name: 'Leumi Card', nameHe: 'לאומי קארד', bank: 'Bank Leumi' },
+  { id: 'diners', name: 'Diners Club', nameHe: 'Diners Club', bank: 'Cal' },
+  { id: 'amex', name: 'American Express Israel', nameHe: 'American Express Israel', bank: 'Isracard' }
+];
+
+const CONSUMER_CLUBS = [
+  { id: 'club_tav_hazahav', name: 'Tav Hazahav', nameHe: 'תו הזהב' },
+  { id: 'club_hever', name: 'Hever', nameHe: 'חבר' },
+  { id: 'club_latet', name: 'Latet', nameHe: 'לתת' },
+  { id: 'club_hot', name: 'Hot Mobile Club', nameHe: 'Hot Mobile Club' },
+  { id: 'club_partner', name: 'Partner Club', nameHe: 'Partner Club' },
+  { id: 'club_pelephone', name: 'Pelephone Club', nameHe: 'Pelephone Club' },
+  { id: 'club_bezeq', name: 'Bezeq Club', nameHe: 'Bezeq Club' },
+  { id: 'club_cellcom', name: 'Cellcom Club', nameHe: 'Cellcom Club' },
+  { id: 'club_students', name: 'Students Club', nameHe: 'מועדון סטודנטים' }
+];
+
+const CATEGORIES = {
+  restaurant: { label: 'מסעדה', labelEn: 'Restaurant', icon: '🍽️', cls: 'cat-restaurant' },
+  fashion: { label: 'אופנה', labelEn: 'Fashion', icon: '👗', cls: 'cat-fashion' },
+  baby: { label: 'תינוקות/ילדים', labelEn: 'Baby/Kids', icon: '👶', cls: 'cat-baby' },
+  home: { label: 'בית', labelEn: 'Home', icon: '🏠', cls: 'cat-home' },
+  beauty: { label: 'ביוטי', labelEn: 'Beauty', icon: '💄', cls: 'cat-beauty' },
+  electronics: { label: 'אלקטרוניקה', labelEn: 'Electronics', icon: '📱', cls: 'cat-electronics' },
+  supermarket: { label: 'סופרמרקט', labelEn: 'Supermarket', icon: '🛒', cls: 'cat-supermarket' }
+};
+
+const STORES = [
+  // ===== RESTAURANTS =====
+  {
+    name: 'Tokyo Nei (טוקיו ניי)',
+    aliases: ['tyoto nei','tokyo nei','tyoto','טוקיו ניי','טוקיו'],
+    category: 'restaurant',
+    giftCards: [
+      { id: 'buyme_restaurant', note: 'ניתן לשלם עד מלוא הסכום' },
+      { id: 'buyme_all' },
+      { id: 'tenbis', note: 'הזמנה דרך האפליקציה' }
+    ],
+    ccDeals: [
+      { id: 'cal_visa', desc: '15% הנחה בימי ראשון-חמישי' },
+      { id: 'max_visa', desc: '10% הנחה בכל יום' }
+    ],
+    clubDeals: [
+      { id: 'club_hever', desc: '10% הנחה' },
+      { id: 'club_students', desc: '15% הנחה בימי ראשון-רביעי' }
+    ]
+  },
+  {
+    name: 'Oshi Oshi (אושי אושי)',
+    aliases: ['oshi oshi','אושי אושי','אושי'],
+    category: 'restaurant',
+    giftCards: [
+      { id: 'buyme_restaurant' },
+      { id: 'buyme_all' },
+      { id: 'tenbis' },
+      { id: 'colu', note: 'בסניפים נבחרים' }
+    ],
+    ccDeals: [
+      { id: 'isracard', desc: '10% הנחה על התפריט' },
+      { id: 'cal_visa', desc: '1+1 על קוקטיילים בימי שלישי' }
+    ],
+    clubDeals: [
+      { id: 'club_hever', desc: '10% הנחה' },
+      { id: 'club_tav_hazahav', desc: '10% הנחה' },
+      { id: 'club_students', desc: '10% הנחה' }
+    ]
+  },
+  {
+    name: 'Shipudei Hatikva (שיפודי התקווה)',
+    aliases: ['shipudei hatikva','שיפודי התקווה','שיפודי','shipudei'],
+    category: 'restaurant',
+    giftCards: [
+      { id: 'buyme_restaurant' },
+      { id: 'buyme_all' }
+    ],
+    ccDeals: [
+      { id: 'diners', desc: '10% הנחה' }
+    ],
+    clubDeals: [
+      { id: 'club_hever', desc: '10% הנחה' }
+    ]
+  },
+  {
+    name: 'Greg Cafe (גרג קפה)',
+    aliases: ['greg','greg cafe','גרג','גרג קפה'],
+    category: 'restaurant',
+    giftCards: [
+      { id: 'buyme_restaurant' },
+      { id: 'buyme_all' },
+      { id: 'tenbis' },
+      { id: 'colu' }
+    ],
+    ccDeals: [
+      { id: 'max_visa', desc: '10% הנחה על החשבון' },
+      { id: 'leumi_card', desc: '1+1 על שתייה חמה' }
+    ],
+    clubDeals: [
+      { id: 'club_tav_hazahav', desc: '10% הנחה' },
+      { id: 'club_students', desc: '15% הנחה + שתייה חמה חינם' }
+    ]
+  },
+  {
+    name: 'Cafe Cafe (קפה קפה)',
+    aliases: ['cafe cafe','קפה קפה','cafecafe'],
+    category: 'restaurant',
+    giftCards: [
+      { id: 'buyme_restaurant' },
+      { id: 'buyme_all' },
+      { id: 'tenbis' }
+    ],
+    ccDeals: [
+      { id: 'cal_visa', desc: '10% הנחה' },
+      { id: 'isracard', desc: 'מנה ראשונה חינם בהזמנת מנה עיקרית' }
+    ],
+    clubDeals: [
+      { id: 'club_hever', desc: '10% הנחה' },
+      { id: 'club_students', desc: '10% הנחה' }
+    ]
+  },
+  {
+    name: 'Aroma (ארומה)',
+    aliases: ['aroma','ארומה','ארומה ישראל'],
+    category: 'restaurant',
+    giftCards: [
+      { id: 'buyme_restaurant' },
+      { id: 'buyme_all' },
+      { id: 'tenbis' },
+      { id: 'colu', note: 'בסניפים נבחרים' }
+    ],
+    ccDeals: [
+      { id: 'max_visa', desc: '5% הנחה קבועה' },
+      { id: 'leumi_card', desc: '10% הנחה בימי שישי' }
+    ],
+    clubDeals: [
+      { id: 'club_students', desc: '10% הנחה' },
+      { id: 'club_tav_hazahav', desc: '5% הנחה' },
+      { id: 'club_cellcom', desc: '10% הנחה בימי שלישי' }
+    ]
+  },
+  {
+    name: 'Landwer Cafe (לנדוור)',
+    aliases: ['landwer','לנדוור','לנדוור קפה','cafe landwer'],
+    category: 'restaurant',
+    giftCards: [
+      { id: 'buyme_restaurant' },
+      { id: 'buyme_all' },
+      { id: 'tenbis' }
+    ],
+    ccDeals: [
+      { id: 'cal_mastercard', desc: '10% הנחה על התפריט' }
+    ],
+    clubDeals: [
+      { id: 'club_hever', desc: '10% הנחה' },
+      { id: 'club_students', desc: '10% הנחה' }
+    ]
+  },
+  {
+    name: 'Japanika (ג\'פניקה)',
+    aliases: ['japanika','ג\'פניקה','japnika'],
+    category: 'restaurant',
+    giftCards: [
+      { id: 'buyme_restaurant' },
+      { id: 'buyme_all' },
+      { id: 'tenbis' }
+    ],
+    ccDeals: [
+      { id: 'cal_visa', desc: '15% הנחה על סושי' },
+      { id: 'max_mastercard', desc: '10% הנחה' }
+    ],
+    clubDeals: [
+      { id: 'club_students', desc: '15% הנחה' },
+      { id: 'club_hever', desc: '10% הנחה' }
+    ]
+  },
+  {
+    name: 'Benedict (בנדיקט)',
+    aliases: ['benedict','בנדיקט'],
+    category: 'restaurant',
+    giftCards: [
+      { id: 'buyme_restaurant' },
+      { id: 'buyme_all' },
+      { id: 'tenbis' }
+    ],
+    ccDeals: [
+      { id: 'isracard', desc: '10% הנחה' },
+      { id: 'amex', desc: '15% הנחה בימי חול' }
+    ],
+    clubDeals: [
+      { id: 'club_tav_hazahav', desc: '10% הנחה' },
+      { id: 'club_partner', desc: '10% הנחה' }
+    ]
+  },
+  {
+    name: 'Moses (מוזס)',
+    aliases: ['moses','מוזס','מוזס בורגר'],
+    category: 'restaurant',
+    giftCards: [
+      { id: 'buyme_restaurant' },
+      { id: 'buyme_all' }
+    ],
+    ccDeals: [
+      { id: 'cal_visa', desc: '10% הנחה' }
+    ],
+    clubDeals: [
+      { id: 'club_hever', desc: '10% הנחה' },
+      { id: 'club_students', desc: '10% הנחה' }
+    ]
+  },
+  {
+    name: 'Vitrina (ויטרינה)',
+    aliases: ['vitrina','ויטרינה'],
+    category: 'restaurant',
+    giftCards: [
+      { id: 'buyme_restaurant' },
+      { id: 'buyme_all' }
+    ],
+    ccDeals: [
+      { id: 'max_visa', desc: '10% הנחה' }
+    ],
+    clubDeals: [
+      { id: 'club_students', desc: '10% הנחה' }
+    ]
+  },
+  {
+    name: 'Boya (בויה)',
+    aliases: ['boya','בויה'],
+    category: 'restaurant',
+    giftCards: [
+      { id: 'buyme_restaurant' },
+      { id: 'buyme_all' }
+    ],
+    ccDeals: [
+      { id: 'diners', desc: '15% הנחה בימי ראשון-רביעי' }
+    ],
+    clubDeals: [
+      { id: 'club_hot', desc: '10% הנחה' }
+    ]
+  },
+  {
+    name: '12 Chairs (12 כסאות)',
+    aliases: ['12 chairs','12 כסאות','שתים עשרה כסאות'],
+    category: 'restaurant',
+    giftCards: [
+      { id: 'buyme_restaurant' },
+      { id: 'buyme_all' }
+    ],
+    ccDeals: [
+      { id: 'amex', desc: '10% הנחה' }
+    ],
+    clubDeals: [
+      { id: 'club_tav_hazahav', desc: '10% הנחה' }
+    ]
+  },
+  {
+    name: 'BBB (בי בי בי)',
+    aliases: ['bbb','בי בי בי','burgersbar','בורגרס בר'],
+    category: 'restaurant',
+    giftCards: [
+      { id: 'buyme_restaurant' },
+      { id: 'buyme_all' },
+      { id: 'tenbis' },
+      { id: 'tav_hazahav' }
+    ],
+    ccDeals: [
+      { id: 'cal_visa', desc: '10% הנחה' },
+      { id: 'max_visa', desc: '1+1 על המבורגר בימי שני' }
+    ],
+    clubDeals: [
+      { id: 'club_hever', desc: '10% הנחה' },
+      { id: 'club_students', desc: '15% הנחה + תוספת חינם' },
+      { id: 'club_tav_hazahav', desc: '10% הנחה' }
+    ]
+  },
+  {
+    name: 'Humus Abu Hassan',
+    aliases: ['humus abu hassan','חומוס אבו חסן','abu hassan'],
+    category: 'restaurant',
+    giftCards: [
+      { id: 'tenbis', note: 'בסניף יפו בלבד' }
+    ],
+    ccDeals: [],
+    clubDeals: [
+      { id: 'club_students', desc: 'חומוס חצי חינם ברכישת מנה' }
+    ]
+  },
+  {
+    name: 'Cafe Neto',
+    aliases: ['cafe neto','קפה נטו','neto'],
+    category: 'restaurant',
+    giftCards: [
+      { id: 'buyme_restaurant' },
+      { id: 'buyme_all' },
+      { id: 'tenbis' }
+    ],
+    ccDeals: [
+      { id: 'isracard', desc: '5% הנחה' }
+    ],
+    clubDeals: [
+      { id: 'club_hot', desc: '10% הנחה' },
+      { id: 'club_pelephone', desc: '10% הנחה' }
+    ]
+  },
+  // ===== FASHION =====
+  {
+    name: 'Castro (קסטרו)',
+    aliases: ['castro','קסטרו'],
+    category: 'fashion',
+    giftCards: [
+      { id: 'buyme_fashion' },
+      { id: 'buyme_all' },
+      { id: 'tav_hazahav', note: 'ניתן לשלם עד 50% מהסכום' },
+      { id: 'dreamcard' }
+    ],
+    ccDeals: [
+      { id: 'cal_visa', desc: '20% הנחה על הקולקציה החדשה' },
+      { id: 'max_visa', desc: '15% הנחה' },
+      { id: 'isracard', desc: '10% הנחה על פריט שני' }
+    ],
+    clubDeals: [
+      { id: 'club_hever', desc: '10% הנחה' },
+      { id: 'club_tav_hazahav', desc: '15% הנחה' },
+      { id: 'club_students', desc: '10% הנחה' }
+    ]
+  },
+  {
+    name: 'Zara',
+    aliases: ['zara','זארה'],
+    category: 'fashion',
+    giftCards: [
+      { id: 'buyme_fashion', note: 'בסניפים נבחרים' },
+      { id: 'buyme_all' }
+    ],
+    ccDeals: [
+      { id: 'amex', desc: '10% הנחה בסוף עונה' }
+    ],
+    clubDeals: [
+      { id: 'club_hever', desc: '5% הנחה על קולקציה חדשה' }
+    ]
+  },
+  {
+    name: 'H&M',
+    aliases: ['h&m','hm','אייצ אנד אם'],
+    category: 'fashion',
+    giftCards: [
+      { id: 'buyme_fashion' },
+      { id: 'buyme_all' },
+      { id: 'dreamcard' }
+    ],
+    ccDeals: [
+      { id: 'max_visa', desc: '10% הנחה' },
+      { id: 'cal_visa', desc: '15% הנחה על קניה מעל 300 ₪' }
+    ],
+    clubDeals: [
+      { id: 'club_students', desc: '10% הנחה' },
+      { id: 'club_hever', desc: '10% הנחה' }
+    ]
+  },
+  {
+    name: 'Golf (גולף)',
+    aliases: ['golf','גולף','golf&co'],
+    category: 'fashion',
+    giftCards: [
+      { id: 'buyme_fashion' },
+      { id: 'buyme_all' },
+      { id: 'tav_hazahav' },
+      { id: 'dreamcard' }
+    ],
+    ccDeals: [
+      { id: 'cal_visa', desc: '15% הנחה' },
+      { id: 'leumi_card', desc: '10% הנחה' }
+    ],
+    clubDeals: [
+      { id: 'club_tav_hazahav', desc: '15% הנחה' },
+      { id: 'club_hever', desc: '10% הנחה' },
+      { id: 'club_partner', desc: '10% הנחה' }
+    ]
+  },
+  {
+    name: 'Fox (פוקס)',
+    aliases: ['fox','פוקס'],
+    category: 'fashion',
+    giftCards: [
+      { id: 'buyme_fashion' },
+      { id: 'buyme_all' },
+      { id: 'tav_hazahav' },
+      { id: 'lovecard' }
+    ],
+    ccDeals: [
+      { id: 'max_visa', desc: '20% הנחה על פריט שני' },
+      { id: 'isracard', desc: '15% הנחה' }
+    ],
+    clubDeals: [
+      { id: 'club_tav_hazahav', desc: '15% הנחה' },
+      { id: 'club_hever', desc: '10% הנחה' },
+      { id: 'club_cellcom', desc: '10% הנחה' }
+    ]
+  },
+  {
+    name: 'Renuar (רנואר)',
+    aliases: ['renuar','רנואר'],
+    category: 'fashion',
+    giftCards: [
+      { id: 'buyme_fashion' },
+      { id: 'buyme_all' },
+      { id: 'tav_hazahav' }
+    ],
+    ccDeals: [
+      { id: 'cal_visa', desc: '15% הנחה' },
+      { id: 'max_mastercard', desc: '10% הנחה' }
+    ],
+    clubDeals: [
+      { id: 'club_tav_hazahav', desc: '10% הנחה' },
+      { id: 'club_hever', desc: '15% הנחה' }
+    ]
+  },
+  {
+    name: 'Honigman (הוניגמן)',
+    aliases: ['honigman','הוניגמן'],
+    category: 'fashion',
+    giftCards: [
+      { id: 'buyme_fashion' },
+      { id: 'buyme_all' },
+      { id: 'tav_hazahav' }
+    ],
+    ccDeals: [
+      { id: 'cal_visa', desc: '20% הנחה' },
+      { id: 'leumi_card', desc: '15% הנחה' }
+    ],
+    clubDeals: [
+      { id: 'club_tav_hazahav', desc: '15% הנחה' },
+      { id: 'club_hever', desc: '10% הנחה' }
+    ]
+  },
+  {
+    name: 'Mango',
+    aliases: ['mango','מנגו'],
+    category: 'fashion',
+    giftCards: [
+      { id: 'buyme_fashion' },
+      { id: 'buyme_all' }
+    ],
+    ccDeals: [
+      { id: 'amex', desc: '10% הנחה' }
+    ],
+    clubDeals: [
+      { id: 'club_hever', desc: '5% הנחה' }
+    ]
+  },
+  {
+    name: 'Pull&Bear',
+    aliases: ['pull&bear','pullandbear','פול אנד בר'],
+    category: 'fashion',
+    giftCards: [
+      { id: 'buyme_fashion' },
+      { id: 'buyme_all' }
+    ],
+    ccDeals: [
+      { id: 'cal_visa', desc: '10% הנחה' }
+    ],
+    clubDeals: [
+      { id: 'club_students', desc: '10% הנחה' }
+    ]
+  },
+  {
+    name: 'Bershka',
+    aliases: ['bershka','ברשקה'],
+    category: 'fashion',
+    giftCards: [
+      { id: 'buyme_fashion' },
+      { id: 'buyme_all' }
+    ],
+    ccDeals: [
+      { id: 'max_visa', desc: '10% הנחה' }
+    ],
+    clubDeals: [
+      { id: 'club_students', desc: '10% הנחה' }
+    ]
+  },
+  {
+    name: 'American Eagle',
+    aliases: ['american eagle','אמריקן איגל','ae'],
+    category: 'fashion',
+    giftCards: [
+      { id: 'buyme_fashion' },
+      { id: 'buyme_all' },
+      { id: 'dreamcard' }
+    ],
+    ccDeals: [
+      { id: 'isracard', desc: '15% הנחה' },
+      { id: 'cal_visa', desc: '10% הנחה' }
+    ],
+    clubDeals: [
+      { id: 'club_students', desc: '15% הנחה' },
+      { id: 'club_hever', desc: '10% הנחה' }
+    ]
+  },
+  {
+    name: 'TNT',
+    aliases: ['tnt','טי אן טי'],
+    category: 'fashion',
+    giftCards: [
+      { id: 'buyme_fashion' },
+      { id: 'buyme_all' }
+    ],
+    ccDeals: [
+      { id: 'cal_visa', desc: '10% הנחה' }
+    ],
+    clubDeals: [
+      { id: 'club_students', desc: '10% הנחה' }
+    ]
+  },
+  {
+    name: 'Billabong',
+    aliases: ['billabong','בילבונג'],
+    category: 'fashion',
+    giftCards: [
+      { id: 'buyme_fashion' },
+      { id: 'buyme_all' }
+    ],
+    ccDeals: [
+      { id: 'max_visa', desc: '15% הנחה' }
+    ],
+    clubDeals: [
+      { id: 'club_hot', desc: '10% הנחה' }
+    ]
+  },
+  // ===== BABY/KIDS =====
+  {
+    name: 'Shilav (שילב)',
+    aliases: ['shilav','שילב'],
+    category: 'baby',
+    giftCards: [
+      { id: 'buyme_baby' },
+      { id: 'buyme_all' },
+      { id: 'tav_hazahav' }
+    ],
+    ccDeals: [
+      { id: 'cal_visa', desc: '10% הנחה' },
+      { id: 'max_visa', desc: '5% הנחה נוספת על מבצעים' }
+    ],
+    clubDeals: [
+      { id: 'club_hever', desc: '10% הנחה' },
+      { id: 'club_tav_hazahav', desc: '10% הנחה' },
+      { id: 'club_latet', desc: '15% הנחה על מוצרי תינוקות' }
+    ]
+  },
+  {
+    name: 'Baby Place',
+    aliases: ['baby place','בייבי פלייס'],
+    category: 'baby',
+    giftCards: [
+      { id: 'buyme_baby' },
+      { id: 'buyme_all' }
+    ],
+    ccDeals: [
+      { id: 'isracard', desc: '10% הנחה' }
+    ],
+    clubDeals: [
+      { id: 'club_hever', desc: '10% הנחה' },
+      { id: 'club_latet', desc: '10% הנחה' }
+    ]
+  },
+  {
+    name: 'Toys R Us Israel',
+    aliases: ['toys r us','toysrus','טויס אר אס'],
+    category: 'baby',
+    giftCards: [
+      { id: 'buyme_baby' },
+      { id: 'buyme_all' },
+      { id: 'dreamcard' }
+    ],
+    ccDeals: [
+      { id: 'cal_visa', desc: '15% הנחה על צעצועים נבחרים' },
+      { id: 'max_visa', desc: '10% הנחה' }
+    ],
+    clubDeals: [
+      { id: 'club_tav_hazahav', desc: '10% הנחה' },
+      { id: 'club_hever', desc: '15% הנחה' },
+      { id: 'club_students', desc: '10% הנחה' }
+    ]
+  },
+  {
+    name: 'Bugaboo IL',
+    aliases: ['bugaboo','בוגבו'],
+    category: 'baby',
+    giftCards: [
+      { id: 'buyme_baby' },
+      { id: 'buyme_all' }
+    ],
+    ccDeals: [
+      { id: 'leumi_card', desc: '5% הנחה + 12 תשלומים ללא ריבית' },
+      { id: 'amex', desc: '10% הנחה' }
+    ],
+    clubDeals: [
+      { id: 'club_hever', desc: '5% הנחה + משלוח חינם' }
+    ]
+  },
+  // ===== HOME/FURNITURE =====
+  {
+    name: 'IKEA (איקאה)',
+    aliases: ['ikea','איקאה','איקיאה'],
+    category: 'home',
+    giftCards: [
+      { id: 'buyme_home' },
+      { id: 'buyme_all' },
+      { id: 'dreamcard' }
+    ],
+    ccDeals: [
+      { id: 'leumi_card', desc: '10% הנחה לחברי Hever' },
+      { id: 'cal_visa', desc: 'עד 24 תשלומים ללא ריבית' },
+      { id: 'max_visa', desc: '5% הנחה על ריהוט' }
+    ],
+    clubDeals: [
+      { id: 'club_hever', desc: '10% הנחה על ריהוט' },
+      { id: 'club_tav_hazahav', desc: '5% הנחה' },
+      { id: 'club_bezeq', desc: '10% הנחה על מוצרי חשמל לבית' }
+    ]
+  },
+  {
+    name: 'Ace (אייס)',
+    aliases: ['ace','אייס'],
+    category: 'home',
+    giftCards: [
+      { id: 'buyme_home' },
+      { id: 'buyme_all' },
+      { id: 'tav_hazahav' },
+      { id: 'dreamcard' }
+    ],
+    ccDeals: [
+      { id: 'isracard', desc: '10% הנחה על כלי עבודה' },
+      { id: 'max_visa', desc: '12 תשלומים ללא ריבית' }
+    ],
+    clubDeals: [
+      { id: 'club_hever', desc: '10% הנחה' },
+      { id: 'club_tav_hazahav', desc: '10% הנחה' }
+    ]
+  },
+  {
+    name: 'Kitan (כיתן)',
+    aliases: ['kitan','כיתן'],
+    category: 'home',
+    giftCards: [
+      { id: 'buyme_home' },
+      { id: 'buyme_all' },
+      { id: 'tav_hazahav' }
+    ],
+    ccDeals: [
+      { id: 'cal_visa', desc: '15% הנחה' },
+      { id: 'max_visa', desc: '10% הנחה' }
+    ],
+    clubDeals: [
+      { id: 'club_tav_hazahav', desc: '15% הנחה' },
+      { id: 'club_hever', desc: '10% הנחה' }
+    ]
+  },
+  {
+    name: 'HomeCentre',
+    aliases: ['homecentre','home centre','הום סנטר'],
+    category: 'home',
+    giftCards: [
+      { id: 'buyme_home' },
+      { id: 'buyme_all' },
+      { id: 'dreamcard' }
+    ],
+    ccDeals: [
+      { id: 'leumi_card', desc: '10% הנחה' },
+      { id: 'isracard', desc: '12 תשלומים ללא ריבית' }
+    ],
+    clubDeals: [
+      { id: 'club_hever', desc: '10% הנחה' },
+      { id: 'club_partner', desc: '5% הנחה' }
+    ]
+  },
+  {
+    name: 'Super-Pharm Home',
+    aliases: ['super-pharm home','סופר פארם בית'],
+    category: 'home',
+    giftCards: [
+      { id: 'buyme_home' },
+      { id: 'buyme_all' }
+    ],
+    ccDeals: [
+      { id: 'cal_visa', desc: '10% הנחה' }
+    ],
+    clubDeals: [
+      { id: 'club_hever', desc: '10% הנחה' }
+    ]
+  },
+  // ===== BEAUTY/COSMETICS =====
+  {
+    name: 'Super-Pharm (סופר-פארם)',
+    aliases: ['super-pharm','סופר-פארם','סופר פארם','superpharm'],
+    category: 'beauty',
+    giftCards: [
+      { id: 'buyme_beauty' },
+      { id: 'buyme_all' },
+      { id: 'dreamcard' },
+      { id: 'tav_hazahav' }
+    ],
+    ccDeals: [
+      { id: 'cal_visa', desc: '10% הנחה על מוצרי טיפוח' },
+      { id: 'isracard', desc: '1+1 על מוצרים נבחרים' },
+      { id: 'max_visa', desc: '5% הנחה קבועה' }
+    ],
+    clubDeals: [
+      { id: 'club_hever', desc: '1+1 על מוצרים נבחרים' },
+      { id: 'club_tav_hazahav', desc: '10% הנחה' },
+      { id: 'club_students', desc: '10% הנחה' },
+      { id: 'club_hot', desc: '10% הנחה על קוסמטיקה' }
+    ]
+  },
+  {
+    name: 'Be (בי פארם)',
+    aliases: ['be','בי','בי פארם','be pharm'],
+    category: 'beauty',
+    giftCards: [
+      { id: 'buyme_beauty' },
+      { id: 'buyme_all' }
+    ],
+    ccDeals: [
+      { id: 'max_visa', desc: '10% הנחה' },
+      { id: 'cal_visa', desc: '15% הנחה על בשמים' }
+    ],
+    clubDeals: [
+      { id: 'club_students', desc: '15% הנחה' },
+      { id: 'club_hever', desc: '10% הנחה' }
+    ]
+  },
+  {
+    name: 'MAC',
+    aliases: ['mac','מאק'],
+    category: 'beauty',
+    giftCards: [
+      { id: 'buyme_beauty' },
+      { id: 'buyme_all' }
+    ],
+    ccDeals: [
+      { id: 'amex', desc: '15% הנחה' },
+      { id: 'diners', desc: '10% הנחה' }
+    ],
+    clubDeals: [
+      { id: 'club_hever', desc: '10% הנחה' }
+    ]
+  },
+  {
+    name: 'Sephora',
+    aliases: ['sephora','ספורה'],
+    category: 'beauty',
+    giftCards: [
+      { id: 'buyme_beauty' },
+      { id: 'buyme_all' },
+      { id: 'dreamcard' }
+    ],
+    ccDeals: [
+      { id: 'cal_visa', desc: '10% הנחה' },
+      { id: 'isracard', desc: '15% הנחה על מותגים נבחרים' }
+    ],
+    clubDeals: [
+      { id: 'club_tav_hazahav', desc: '10% הנחה' },
+      { id: 'club_hever', desc: '10% הנחה' },
+      { id: 'club_pelephone', desc: '5% הנחה' }
+    ]
+  },
+  {
+    name: 'The Body Shop',
+    aliases: ['the body shop','בודי שופ','body shop'],
+    category: 'beauty',
+    giftCards: [
+      { id: 'buyme_beauty' },
+      { id: 'buyme_all' },
+      { id: 'tav_hazahav' }
+    ],
+    ccDeals: [
+      { id: 'max_visa', desc: '15% הנחה' },
+      { id: 'cal_visa', desc: '10% הנחה' }
+    ],
+    clubDeals: [
+      { id: 'club_tav_hazahav', desc: '15% הנחה' },
+      { id: 'club_hever', desc: '10% הנחה' },
+      { id: 'club_students', desc: '10% הנחה' }
+    ]
+  },
+  // ===== ELECTRONICS =====
+  {
+    name: 'KSP (קיי.אס.פי)',
+    aliases: ['ksp','קיי.אס.פי','קיי אס פי'],
+    category: 'electronics',
+    giftCards: [
+      { id: 'buyme_all' },
+      { id: 'dreamcard' }
+    ],
+    ccDeals: [
+      { id: 'cal_visa', desc: 'עד 36 תשלומים ללא ריבית' },
+      { id: 'max_visa', desc: 'עד 24 תשלומים ללא ריבית' },
+      { id: 'isracard', desc: '5% הנחה על אביזרים' }
+    ],
+    clubDeals: [
+      { id: 'club_hever', desc: '5% הנחה על אביזרים' },
+      { id: 'club_students', desc: '5% הנחה' },
+      { id: 'club_partner', desc: 'עד 10% הנחה על מוצרים נבחרים' }
+    ]
+  },
+  {
+    name: 'Bug (באג)',
+    aliases: ['bug','באג'],
+    category: 'electronics',
+    giftCards: [
+      { id: 'buyme_all' },
+      { id: 'dreamcard' }
+    ],
+    ccDeals: [
+      { id: 'cal_visa', desc: 'עד 24 תשלומים ללא ריבית' },
+      { id: 'leumi_card', desc: '10% הנחה על אביזרים' }
+    ],
+    clubDeals: [
+      { id: 'club_hever', desc: '5% הנחה' },
+      { id: 'club_cellcom', desc: 'עד 10% הנחה' }
+    ]
+  },
+  {
+    name: 'Ivory (אייבורי)',
+    aliases: ['ivory','אייבורי'],
+    category: 'electronics',
+    giftCards: [
+      { id: 'buyme_all' },
+      { id: 'dreamcard' }
+    ],
+    ccDeals: [
+      { id: 'max_visa', desc: 'עד 18 תשלומים ללא ריבית' },
+      { id: 'isracard', desc: '5% הנחה' }
+    ],
+    clubDeals: [
+      { id: 'club_hever', desc: '5% הנחה' },
+      { id: 'club_hot', desc: '5% הנחה' }
+    ]
+  },
+  {
+    name: 'iDigital (איי דיגיטל)',
+    aliases: ['idigital','איי דיגיטל'],
+    category: 'electronics',
+    giftCards: [
+      { id: 'buyme_all' },
+      { id: 'dreamcard' }
+    ],
+    ccDeals: [
+      { id: 'cal_visa', desc: 'עד 36 תשלומים ללא ריבית על מוצרי Apple' },
+      { id: 'amex', desc: '10% הנחה על אביזרים' }
+    ],
+    clubDeals: [
+      { id: 'club_hever', desc: '5% הנחה על אביזרים' },
+      { id: 'club_students', desc: '10% הנחה על אביזרים' }
+    ]
+  },
+  // ===== SUPERMARKETS =====
+  {
+    name: 'Shufersal (שופרסל)',
+    aliases: ['shufersal','שופרסל','שופר-סל'],
+    category: 'supermarket',
+    giftCards: [
+      { id: 'colu', note: 'במסגרת קולו שכונתי' },
+      { id: 'tav_hazahav' }
+    ],
+    ccDeals: [
+      { id: 'isracard', desc: '0.5% קאשבק' },
+      { id: 'max_visa', desc: 'הטענת ארנק דיגיטלי בהנחה' }
+    ],
+    clubDeals: [
+      { id: 'club_hever', desc: 'הנחות שבועיות בלעדיות' },
+      { id: 'club_tav_hazahav', desc: '5% הנחה' }
+    ]
+  },
+  {
+    name: 'Rami Levy (רמי לוי)',
+    aliases: ['rami levy','רמי לוי'],
+    category: 'supermarket',
+    giftCards: [
+      { id: 'presto' },
+      { id: 'colu', note: 'בסניפים נבחרים' }
+    ],
+    ccDeals: [
+      { id: 'cal_visa', desc: '1% קאשבק' }
+    ],
+    clubDeals: [
+      { id: 'club_hever', desc: 'הנחות חודשיות בלעדיות' },
+      { id: 'club_latet', desc: '5% הנחה' }
+    ]
+  },
+  {
+    name: 'Victory (ויקטורי)',
+    aliases: ['victory','ויקטורי'],
+    category: 'supermarket',
+    giftCards: [
+      { id: 'tav_hazahav' },
+      { id: 'colu' }
+    ],
+    ccDeals: [
+      { id: 'leumi_card', desc: 'הנחות שבועיות בלעדיות' }
+    ],
+    clubDeals: [
+      { id: 'club_hever', desc: 'הנחות שבועיות' },
+      { id: 'club_tav_hazahav', desc: '5% הנחה' }
+    ]
+  },
+  {
+    name: 'Yochananof (יוחננוף)',
+    aliases: ['yochananof','יוחננוף'],
+    category: 'supermarket',
+    giftCards: [
+      { id: 'colu' },
+      { id: 'presto', note: 'בסניפים נבחרים' }
+    ],
+    ccDeals: [
+      { id: 'isracard', desc: 'הנחות מועדון בלעדיות' }
+    ],
+    clubDeals: [
+      { id: 'club_hever', desc: 'הנחות שבועיות' },
+      { id: 'club_bezeq', desc: '5% הנחה' }
+    ]
+  }
+];
+
+// Lookup helpers
+const gcMap = {};
+GIFT_CARD_PLATFORMS.forEach(g => { gcMap[g.id] = g; });
+const ccMap = {};
+CREDIT_CARDS.forEach(c => { ccMap[c.id] = c; });
+const clubMap = {};
+CONSUMER_CLUBS.forEach(c => { clubMap[c.id] = c; });
+
+// =============================================
+// STATE
+// =============================================
+let userPrefs = { giftCards: [], creditCards: [], clubs: [] };
+
+function loadPrefs() {
+  try {
+    const saved = localStorage.getItem('dealsFinder_prefs');
+    if (saved) userPrefs = JSON.parse(saved);
+  } catch(e) {}
+}
+function savePrefs() {
+  try {
+    localStorage.setItem('dealsFinder_prefs', JSON.stringify(userPrefs));
+  } catch(e) {}
+}
+function hasAnyPrefs() {
+  return userPrefs.giftCards.length > 0 || userPrefs.creditCards.length > 0 || userPrefs.clubs.length > 0;
+}
+
+// =============================================
+// SEARCH
+// =============================================
+function searchStores(query) {
+  if (!query || query.trim().length === 0) return [];
+  const q = query.trim().toLowerCase();
+  return STORES.filter(store => {
+    if (store.name.toLowerCase().includes(q)) return true;
+    return store.aliases.some(a => a.toLowerCase().includes(q));
+  });
+}
+
+// =============================================
+// RENDER
+// =============================================
+const resultsEl = document.getElementById('results');
+const searchInput = document.getElementById('searchInput');
+const searchClear = document.getElementById('searchClear');
+const settingsBtn = document.getElementById('settingsBtn');
+const settingsPanel = document.getElementById('settingsPanel');
+const personalBadge = document.getElementById('personalBadge');
+
+function renderInitialState() {
+  const popularStores = ['Aroma','BBB','Castro','IKEA','Super-Pharm','KSP','Fox','Greg Cafe','Shufersal','H&M','Sephora','Oshi Oshi'];
+  resultsEl.innerHTML = `
+    <div class="empty-state">
+      <div class="empty-icon">🔍</div>
+      <div class="empty-title">חפשו חנות או מסעדה</div>
+      <div class="empty-desc">הקלידו שם בעברית או באנגלית וגלו כרטיסי מתנה, הנחות כרטיסי אשראי ומועדוני צרכנות</div>
+      <div class="popular-section">
+        <div class="popular-title">🔥 חנויות פופולריות</div>
+        <div class="popular-grid">
+          ${popularStores.map(s => {
+            const store = STORES.find(st => st.name.includes(s));
+            const cat = store ? CATEGORIES[store.category] : null;
+            return `<div class="popular-chip" onclick="quickSearch('${s}')">${cat ? cat.icon + ' ' : ''}${s}</div>`;
+          }).join('')}
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+function renderNoResults(query) {
+  resultsEl.innerHTML = `
+    <div class="empty-state">
+      <div class="empty-icon">😕</div>
+      <div class="empty-title">לא נמצאו תוצאות</div>
+      <div class="empty-desc">לא מצאנו חנות התואמת ל-"${escapeHtml(query)}".<br>נסו לחפש בשם אחר או בשפה אחרת.</div>
+    </div>
+  `;
+}
+
+function escapeHtml(str) {
+  const div = document.createElement('div');
+  div.textContent = str;
+  return div.innerHTML;
+}
+
+function getDisplayName(id, map) {
+  const item = map[id];
+  if (!item) return id;
+  if (item.nameHe && item.nameHe !== item.name) return `${item.name} (${item.nameHe})`;
+  return item.name;
+}
+
+function renderResults(stores) {
+  if (stores.length === 0) {
+    renderNoResults(searchInput.value);
+    return;
+  }
+
+  let html = `<div class="results-info">📋 נמצאו ${stores.length} תוצאות</div>`;
+
+  stores.forEach((store, idx) => {
+    const cat = CATEGORIES[store.category];
+
+    // Separate personal vs non-personal deals
+    const personalGC = store.giftCards.filter(g => userPrefs.giftCards.includes(g.id));
+    const otherGC = store.giftCards.filter(g => !userPrefs.giftCards.includes(g.id));
+    const personalCC = store.ccDeals.filter(c => userPrefs.creditCards.includes(c.id));
+    const otherCC = store.ccDeals.filter(c => !userPrefs.creditCards.includes(c.id));
+    const personalClub = store.clubDeals.filter(c => userPrefs.clubs.includes(c.id));
+    const otherClub = store.clubDeals.filter(c => !userPrefs.clubs.includes(c.id));
+    const hasPersonal = personalGC.length > 0 || personalCC.length > 0 || personalClub.length > 0;
+
+    html += `<div class="store-card" style="animation-delay: ${idx * 0.06}s">`;
+    html += `<div class="card-header">
+      <div class="store-name">${escapeHtml(store.name)}</div>
+      <span class="category-badge ${cat.cls}">${cat.icon} ${cat.label}</span>
+    </div>`;
+    html += `<div class="card-body">`;
+
+    // Personal deals section
+    if (hasPersonal && hasAnyPrefs()) {
+      html += `<div class="personal-section">`;
+      html += `<div class="personal-section-title">✨ ההטבות שלך</div>`;
+
+      if (personalGC.length > 0) {
+        html += `<div class="deal-section"><div class="deal-section-title">🎁 כרטיסי מתנה שלך</div>`;
+        html += `<div class="gift-tags-wrap">`;
+        personalGC.forEach(g => {
+          const gc = gcMap[g.id];
+          let label = gc ? getDisplayName(g.id, gcMap) : g.id;
+          if (g.note) label += ` (${g.note})`;
+          html += `<span class="gift-tag personal">${label}</span>`;
+        });
+        html += `</div></div>`;
+      }
+
+      if (personalCC.length > 0) {
+        html += `<div class="deal-section"><div class="deal-section-title">💳 הנחות כרטיס אשראי שלך</div>`;
+        html += `<ul class="deal-list">`;
+        personalCC.forEach(c => {
+          html += `<li class="deal-item"><span class="deal-name">${getDisplayName(c.id, ccMap)}</span><span class="deal-dot">—</span><span class="deal-desc">${escapeHtml(c.desc)}</span></li>`;
+        });
+        html += `</ul></div>`;
+      }
+
+      if (personalClub.length > 0) {
+        html += `<div class="deal-section"><div class="deal-section-title">⭐ מועדונים שלך</div>`;
+        html += `<ul class="deal-list">`;
+        personalClub.forEach(c => {
+          html += `<li class="deal-item"><span class="deal-name">${getDisplayName(c.id, clubMap)}</span><span class="deal-dot">—</span><span class="deal-desc">${escapeHtml(c.desc)}</span></li>`;
+        });
+        html += `</ul></div>`;
+      }
+
+      html += `</div>`;
+    }
+
+    // All Gift Cards
+    if (store.giftCards.length > 0) {
+      const gcs = hasAnyPrefs() ? otherGC : store.giftCards;
+      const title = hasAnyPrefs() && personalGC.length > 0 ? '🎁 כרטיסי מתנה נוספים' : '🎁 כרטיסי מתנה';
+      if (gcs.length > 0) {
+        html += `<div class="deal-section"><div class="deal-section-title">${title}</div>`;
+        html += `<div class="gift-tags-wrap">`;
+        gcs.forEach(g => {
+          const gc = gcMap[g.id];
+          let label = gc ? getDisplayName(g.id, gcMap) : g.id;
+          if (g.note) label += ` (${g.note})`;
+          html += `<span class="gift-tag">${label}</span>`;
+        });
+        html += `</div></div>`;
+      } else if (!hasAnyPrefs()) {
+        // show all if no prefs
+      }
+    }
+
+    // Credit Card Deals
+    if (store.ccDeals.length > 0) {
+      const ccs = hasAnyPrefs() ? otherCC : store.ccDeals;
+      const title = hasAnyPrefs() && personalCC.length > 0 ? '💳 הנחות אשראי נוספות' : '💳 הנחות כרטיס אשראי';
+      if (ccs.length > 0) {
+        html += `<div class="deal-section"><div class="deal-section-title">${title}</div>`;
+        html += `<ul class="deal-list">`;
+        ccs.forEach(c => {
+          html += `<li class="deal-item"><span class="deal-name">${getDisplayName(c.id, ccMap)}</span><span class="deal-dot">—</span><span class="deal-desc">${escapeHtml(c.desc)}</span></li>`;
+        });
+        html += `</ul></div>`;
+      }
+    }
+
+    // Club Deals
+    if (store.clubDeals.length > 0) {
+      const clubs = hasAnyPrefs() ? otherClub : store.clubDeals;
+      const title = hasAnyPrefs() && personalClub.length > 0 ? '⭐ מועדוני צרכנות נוספים' : '⭐ מועדוני צרכנות';
+      if (clubs.length > 0) {
+        html += `<div class="deal-section"><div class="deal-section-title">${title}</div>`;
+        html += `<ul class="deal-list">`;
+        clubs.forEach(c => {
+          html += `<li class="deal-item"><span class="deal-name">${getDisplayName(c.id, clubMap)}</span><span class="deal-dot">—</span><span class="deal-desc">${escapeHtml(c.desc)}</span></li>`;
+        });
+        html += `</ul></div>`;
+      }
+    }
+
+    html += `</div></div>`;
+  });
+
+  resultsEl.innerHTML = html;
+}
+
+// =============================================
+// SETTINGS PANEL
+// =============================================
+function buildSettingsCheckboxes() {
+  const gcGrid = document.getElementById('gcGrid');
+  const ccGrid = document.getElementById('ccGrid');
+  const clubGrid = document.getElementById('clubGrid');
+
+  gcGrid.innerHTML = GIFT_CARD_PLATFORMS.map(g => `
+    <div class="checkbox-item">
+      <input type="checkbox" id="gc_${g.id}" value="${g.id}" ${userPrefs.giftCards.includes(g.id) ? 'checked' : ''}>
+      <label for="gc_${g.id}">${g.name}${g.nameHe !== g.name ? '<br><small>' + g.nameHe + '</small>' : ''}</label>
+    </div>
+  `).join('');
+
+  ccGrid.innerHTML = CREDIT_CARDS.map(c => `
+    <div class="checkbox-item">
+      <input type="checkbox" id="cc_${c.id}" value="${c.id}" ${userPrefs.creditCards.includes(c.id) ? 'checked' : ''}>
+      <label for="cc_${c.id}">${c.name}${c.nameHe !== c.name ? '<br><small>' + c.nameHe + '</small>' : ''}<br><small style="color:#adb5bd">${c.bank}</small></label>
+    </div>
+  `).join('');
+
+  clubGrid.innerHTML = CONSUMER_CLUBS.map(c => `
+    <div class="checkbox-item">
+      <input type="checkbox" id="cl_${c.id}" value="${c.id}" ${userPrefs.clubs.includes(c.id) ? 'checked' : ''}>
+      <label for="cl_${c.id}">${c.name}${c.nameHe !== c.name ? '<br><small>' + c.nameHe + '</small>' : ''}</label>
+    </div>
+  `).join('');
+
+  // Bind change events
+  gcGrid.querySelectorAll('input').forEach(inp => {
+    inp.addEventListener('change', () => {
+      if (inp.checked) { if (!userPrefs.giftCards.includes(inp.value)) userPrefs.giftCards.push(inp.value); }
+      else { userPrefs.giftCards = userPrefs.giftCards.filter(x => x !== inp.value); }
+      savePrefs();
+      updateCounts();
+      refreshResults();
+    });
+  });
+  ccGrid.querySelectorAll('input').forEach(inp => {
+    inp.addEventListener('change', () => {
+      if (inp.checked) { if (!userPrefs.creditCards.includes(inp.value)) userPrefs.creditCards.push(inp.value); }
+      else { userPrefs.creditCards = userPrefs.creditCards.filter(x => x !== inp.value); }
+      savePrefs();
+      updateCounts();
+      refreshResults();
+    });
+  });
+  clubGrid.querySelectorAll('input').forEach(inp => {
+    inp.addEventListener('change', () => {
+      if (inp.checked) { if (!userPrefs.clubs.includes(inp.value)) userPrefs.clubs.push(inp.value); }
+      else { userPrefs.clubs = userPrefs.clubs.filter(x => x !== inp.value); }
+      savePrefs();
+      updateCounts();
+      refreshResults();
+    });
+  });
+}
+
+function updateCounts() {
+  document.getElementById('gcCount').textContent = userPrefs.giftCards.length;
+  document.getElementById('ccCount').textContent = userPrefs.creditCards.length;
+  document.getElementById('clubCount').textContent = userPrefs.clubs.length;
+  personalBadge.classList.toggle('visible', hasAnyPrefs());
+}
+
+function refreshResults() {
+  const query = searchInput.value.trim();
+  if (query.length > 0) {
+    const results = searchStores(query);
+    renderResults(results);
+  }
+}
+
+// =============================================
+// EVENT HANDLERS
+// =============================================
+
+// Search
+let searchTimeout;
+searchInput.addEventListener('input', () => {
+  const val = searchInput.value;
+  searchClear.classList.toggle('visible', val.length > 0);
+
+  clearTimeout(searchTimeout);
+  searchTimeout = setTimeout(() => {
+    if (val.trim().length === 0) {
+      renderInitialState();
+    } else {
+      const results = searchStores(val);
+      renderResults(results);
+    }
+  }, 150);
+});
+
+searchClear.addEventListener('click', () => {
+  searchInput.value = '';
+  searchClear.classList.remove('visible');
+  renderInitialState();
+  searchInput.focus();
+});
+
+function quickSearch(term) {
+  searchInput.value = term;
+  searchClear.classList.add('visible');
+  const results = searchStores(term);
+  renderResults(results);
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// Settings toggle
+settingsBtn.addEventListener('click', () => {
+  const isOpen = settingsPanel.classList.toggle('open');
+  settingsBtn.classList.toggle('active', isOpen);
+});
+
+// Section toggles
+document.querySelectorAll('.section-toggle').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const section = btn.dataset.section;
+    const content = document.getElementById(section + '-content');
+    const isOpen = content.classList.toggle('open');
+    btn.classList.toggle('expanded', isOpen);
+  });
+});
+
+// =============================================
+// INIT
+// =============================================
+loadPrefs();
+buildSettingsCheckboxes();
+updateCounts();
+renderInitialState();
+</script>
+</body>
+</html>

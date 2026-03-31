@@ -1,0 +1,268 @@
+{% extends "base.html" %}
+{% block title %}Deals Bot - Manage Preferences{% endblock %}
+
+{% block extra_styles %}
+.manage-header { margin-bottom: 1.5rem; animation: fadeIn 0.4s ease; }
+.manage-header h1 { font-size: 1.6rem; font-weight: 700; color: #1a1a2e; margin-bottom: 0.25rem; }
+.manage-header p { color: #888; font-size: 0.92rem; }
+
+.tabs-nav {
+    display: flex; gap: 0.35rem; background: #fff; padding: 0.4rem;
+    border-radius: 14px; box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+    margin-bottom: 1.5rem; overflow-x: auto;
+}
+.tab-btn {
+    flex: 1; min-width: 0; padding: 0.7rem 1rem; border: none; border-radius: 10px;
+    background: transparent; font-family: 'Rubik', sans-serif; font-size: 0.88rem;
+    font-weight: 500; color: #888; cursor: pointer; transition: all 0.25s ease;
+    white-space: nowrap; display: flex; align-items: center; justify-content: center; gap: 0.4rem;
+}
+.tab-btn:hover { color: #555; background: #f5f5f5; }
+.tab-btn.active {
+    background: linear-gradient(135deg, #16a085, #1abc9c); color: #fff;
+    box-shadow: 0 2px 8px rgba(22,160,133,0.25);
+}
+.tab-btn .tab-count {
+    font-size: 0.75rem; background: rgba(0,0,0,0.1); padding: 0.1rem 0.45rem;
+    border-radius: 8px; font-weight: 600;
+}
+.tab-btn.active .tab-count { background: rgba(255,255,255,0.25); }
+
+.tab-panel { display: none; animation: tabFadeIn 0.35s ease; }
+.tab-panel.active { display: block; }
+@keyframes tabFadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+
+.items-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 0.85rem; margin-bottom: 1.5rem;
+}
+.item-card {
+    background: #fff; border: 2px solid #eee; border-radius: 14px;
+    padding: 1.1rem 1.2rem; transition: all 0.2s ease; cursor: pointer;
+}
+.item-card:hover { border-color: #d5d5d5; box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
+.item-card.selected { border-color: #16a085; background: #f0faf8; box-shadow: 0 0 0 3px rgba(22,160,133,0.1); }
+.item-card-header { display: flex; align-items: center; gap: 0.75rem; }
+
+.item-checkbox { position: relative; width: 22px; height: 22px; min-width: 22px; }
+.item-checkbox input[type="checkbox"] {
+    opacity: 0; width: 22px; height: 22px; position: absolute; cursor: pointer; z-index: 2; margin: 0;
+}
+.item-checkbox .checkmark {
+    position: absolute; top: 0; right: 0; width: 22px; height: 22px;
+    border: 2px solid #ccc; border-radius: 6px; transition: all 0.2s ease;
+    display: flex; align-items: center; justify-content: center;
+}
+.item-checkbox input:checked + .checkmark { background: linear-gradient(135deg, #16a085, #1abc9c); border-color: #16a085; }
+.item-checkbox .checkmark::after {
+    content: ''; width: 6px; height: 10px; border: solid #fff;
+    border-width: 0 2px 2px 0; transform: rotate(45deg); opacity: 0;
+    transition: opacity 0.2s ease; margin-top: -2px;
+}
+.item-checkbox input:checked + .checkmark::after { opacity: 1; }
+
+.item-info { flex: 1; min-width: 0; }
+.item-name { font-size: 0.95rem; font-weight: 600; color: #1a1a2e; margin-bottom: 0.1rem; }
+.item-desc { font-size: 0.8rem; color: #999; line-height: 1.4; }
+.item-bank { font-size: 0.78rem; color: #16a085; font-weight: 500; }
+
+.balance-row {
+    margin-top: 0.7rem; padding-top: 0.7rem; border-top: 1px solid #eee;
+    display: none; animation: tabFadeIn 0.25s ease;
+}
+.item-card.selected .balance-row { display: flex; align-items: center; gap: 0.5rem; }
+.balance-label { font-size: 0.82rem; color: #777; white-space: nowrap; }
+.balance-input {
+    width: 120px; padding: 0.4rem 0.6rem; border: 2px solid #e8e8e8;
+    border-radius: 8px; font-family: 'Rubik', sans-serif; font-size: 0.88rem;
+    color: #333; direction: ltr; text-align: left; transition: border-color 0.2s ease;
+}
+.balance-input:focus { outline: none; border-color: #16a085; box-shadow: 0 0 0 2px rgba(22,160,133,0.1); }
+.balance-currency { font-size: 0.85rem; color: #888; font-weight: 500; }
+
+.save-bar {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 1rem 1.25rem; background: #fff; border-radius: 14px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.06), 0 4px 12px rgba(0,0,0,0.04);
+}
+.save-bar-info { font-size: 0.85rem; color: #888; }
+.save-bar-info strong { color: #16a085; }
+
+@media (max-width: 768px) {
+    .tabs-nav { gap: 0.2rem; padding: 0.3rem; }
+    .tab-btn { font-size: 0.82rem; padding: 0.6rem 0.5rem; }
+    .items-grid { grid-template-columns: 1fr; }
+    .save-bar { flex-direction: column; gap: 0.75rem; text-align: center; }
+}
+{% endblock %}
+
+{% block content %}
+<div class="manage-header">
+    <h1>Manage My Preferences</h1>
+    <p>Select your cards and clubs to get personalized deals via WhatsApp</p>
+</div>
+
+<div class="tabs-container">
+    <div class="tabs-nav">
+        <button class="tab-btn active" data-tab="gift-cards" onclick="switchTab('gift-cards')">
+            🎁 Gift Cards <span class="tab-count" id="gc-count">{{ user_gift_cards|length }}</span>
+        </button>
+        <button class="tab-btn" data-tab="credit-cards" onclick="switchTab('credit-cards')">
+            💳 Credit Cards <span class="tab-count" id="cc-count">{{ user_credit_cards|length }}</span>
+        </button>
+        <button class="tab-btn" data-tab="clubs" onclick="switchTab('clubs')">
+            ⭐ Consumer Clubs <span class="tab-count" id="club-count">{{ user_consumer_clubs|length }}</span>
+        </button>
+    </div>
+
+    <!-- Gift Cards Tab -->
+    <div class="tab-panel active" id="panel-gift-cards">
+        <form method="POST" action="{{ url_for('save_gift_cards') }}">
+            <input type="hidden" name="user_id" value="{{ user.id }}">
+            {% if gift_card_platforms %}
+            <div class="items-grid">
+                {% for gc in gift_card_platforms %}
+                {% set is_selected = gc.id in user_gift_cards|map(attribute='gift_card_platform_id')|list %}
+                <label class="item-card {{ 'selected' if is_selected }}" id="gc-card-{{ gc.id }}">
+                    <div class="item-card-header">
+                        <div class="item-checkbox">
+                            <input type="checkbox" name="gc_{{ gc.id }}" value="1"
+                                   {{ 'checked' if is_selected }}
+                                   onchange="toggleItemCard(this, 'gc-card-{{ gc.id }}'); updateCount('gift-cards')">
+                            <span class="checkmark"></span>
+                        </div>
+                        <div class="item-info">
+                            <div class="item-name">{{ gc.name }}</div>
+                            {% if gc.description %}
+                            <div class="item-desc">{{ gc.description }}</div>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="balance-row">
+                        <span class="balance-label">Balance:</span>
+                        <input type="number" name="balance_{{ gc.id }}" class="balance-input"
+                               placeholder="0.00" step="0.01" min="0"
+                               onclick="event.stopPropagation()">
+                        <span class="balance-currency">₪</span>
+                    </div>
+                </label>
+                {% endfor %}
+            </div>
+            <div class="save-bar">
+                <div class="save-bar-info">
+                    <strong id="gc-selected-count">{{ user_gift_cards|length }}</strong> gift cards selected
+                </div>
+                <button type="submit" class="btn btn-primary">Save Changes</button>
+            </div>
+            {% endif %}
+        </form>
+    </div>
+
+    <!-- Credit Cards Tab -->
+    <div class="tab-panel" id="panel-credit-cards">
+        <form method="POST" action="{{ url_for('save_credit_cards') }}">
+            <input type="hidden" name="user_id" value="{{ user.id }}">
+            {% if credit_cards %}
+            <div class="items-grid">
+                {% for cc in credit_cards %}
+                {% set is_selected = cc.id in user_credit_cards|map(attribute='credit_card_id')|list %}
+                <label class="item-card {{ 'selected' if is_selected }}" id="cc-card-{{ cc.id }}">
+                    <div class="item-card-header">
+                        <div class="item-checkbox">
+                            <input type="checkbox" name="cc_{{ cc.id }}" value="1"
+                                   {{ 'checked' if is_selected }}
+                                   onchange="toggleItemCard(this, 'cc-card-{{ cc.id }}'); updateCount('credit-cards')">
+                            <span class="checkmark"></span>
+                        </div>
+                        <div class="item-info">
+                            <div class="item-name">{{ cc.name }}</div>
+                            {% if cc.bank %}<div class="item-bank">🏦 {{ cc.bank }}</div>{% endif %}
+                            {% if cc.description %}<div class="item-desc">{{ cc.description }}</div>{% endif %}
+                        </div>
+                    </div>
+                </label>
+                {% endfor %}
+            </div>
+            <div class="save-bar">
+                <div class="save-bar-info">
+                    <strong id="cc-selected-count">{{ user_credit_cards|length }}</strong> credit cards selected
+                </div>
+                <button type="submit" class="btn btn-primary">Save Changes</button>
+            </div>
+            {% endif %}
+        </form>
+    </div>
+
+    <!-- Consumer Clubs Tab -->
+    <div class="tab-panel" id="panel-clubs">
+        <form method="POST" action="{{ url_for('save_consumer_clubs') }}">
+            <input type="hidden" name="user_id" value="{{ user.id }}">
+            {% if consumer_clubs %}
+            <div class="items-grid">
+                {% for club in consumer_clubs %}
+                {% set is_selected = club.id in user_consumer_clubs|map(attribute='consumer_club_id')|list %}
+                <label class="item-card {{ 'selected' if is_selected }}" id="club-card-{{ club.id }}">
+                    <div class="item-card-header">
+                        <div class="item-checkbox">
+                            <input type="checkbox" name="club_{{ club.id }}" value="1"
+                                   {{ 'checked' if is_selected }}
+                                   onchange="toggleItemCard(this, 'club-card-{{ club.id }}'); updateCount('clubs')">
+                            <span class="checkmark"></span>
+                        </div>
+                        <div class="item-info">
+                            <div class="item-name">{{ club.name }}</div>
+                            {% if club.description %}<div class="item-desc">{{ club.description }}</div>{% endif %}
+                        </div>
+                    </div>
+                </label>
+                {% endfor %}
+            </div>
+            <div class="save-bar">
+                <div class="save-bar-info">
+                    <strong id="club-selected-count">{{ user_consumer_clubs|length }}</strong> clubs selected
+                </div>
+                <button type="submit" class="btn btn-primary">Save Changes</button>
+            </div>
+            {% endif %}
+        </form>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+function switchTab(tabId) {
+    document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+    document.querySelector(`.tab-btn[data-tab="${tabId}"]`).classList.add('active');
+    document.querySelectorAll('.tab-panel').forEach(panel => panel.classList.remove('active'));
+    const target = document.getElementById(`panel-${tabId}`);
+    target.classList.add('active');
+    target.style.animation = 'none';
+    target.offsetHeight;
+    target.style.animation = '';
+    history.replaceState(null, null, `#${tabId}`);
+}
+
+function toggleItemCard(checkbox, cardId) {
+    const card = document.getElementById(cardId);
+    card.classList.toggle('selected', checkbox.checked);
+}
+
+function updateCount(tabId) {
+    const panel = document.getElementById(`panel-${tabId}`);
+    const checked = panel.querySelectorAll('input[type="checkbox"]:checked').length;
+    const countMap = { 'gift-cards': 'gc-count', 'credit-cards': 'cc-count', 'clubs': 'club-count' };
+    const selectedMap = { 'gift-cards': 'gc-selected-count', 'credit-cards': 'cc-selected-count', 'clubs': 'club-selected-count' };
+    const el1 = document.getElementById(countMap[tabId]);
+    const el2 = document.getElementById(selectedMap[tabId]);
+    if (el1) el1.textContent = checked;
+    if (el2) el2.textContent = checked;
+}
+
+(function() {
+    const hash = window.location.hash.replace('#', '');
+    const valid = ['gift-cards', 'credit-cards', 'clubs'];
+    if (hash && valid.includes(hash)) switchTab(hash);
+})();
+</script>
+{% endblock %}

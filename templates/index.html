@@ -1,0 +1,172 @@
+{% extends "base.html" %}
+{% block title %}Deals Bot - Home{% endblock %}
+
+{% block extra_styles %}
+.login-container { max-width: 480px; margin: 3rem auto; animation: fadeIn 0.5s ease; }
+.login-header { text-align: center; margin-bottom: 2rem; }
+.login-header .login-icon {
+    width: 72px; height: 72px; background: linear-gradient(135deg, #16a085, #1abc9c);
+    border-radius: 20px; display: flex; align-items: center; justify-content: center;
+    font-size: 2rem; margin: 0 auto 1rem; box-shadow: 0 4px 16px rgba(22,160,133,0.3);
+}
+.login-header h1 { font-size: 1.6rem; font-weight: 700; color: #1a1a2e; margin-bottom: 0.5rem; }
+.login-header p { color: #777; font-size: 0.92rem; line-height: 1.7; }
+.phone-input-group { display: flex; gap: 0.5rem; align-items: stretch; direction: ltr; }
+.phone-prefix {
+    background: #eef2f7; border: 2px solid #e8e8e8; border-radius: 10px;
+    padding: 0.7rem 0.8rem; font-size: 0.95rem; color: #555; font-weight: 500;
+    display: flex; align-items: center; white-space: nowrap;
+}
+.phone-input-group .form-input { text-align: left; flex: 1; }
+.login-hint { font-size: 0.8rem; color: #999; margin-top: 0.4rem; direction: ltr; text-align: left; }
+
+.dashboard-welcome { margin-bottom: 2rem; animation: fadeIn 0.4s ease; }
+.dashboard-welcome h1 { font-size: 1.75rem; font-weight: 700; color: #1a1a2e; margin-bottom: 0.3rem; }
+.dashboard-welcome p { color: #777; font-size: 0.95rem; }
+
+.stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-bottom: 2rem; }
+.stat-card {
+    background: #fff; border-radius: 16px; padding: 1.5rem;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.06), 0 4px 12px rgba(0,0,0,0.04);
+    text-align: center; transition: transform 0.2s ease; animation: slideIn 0.4s ease backwards;
+}
+.stat-card:nth-child(1) { animation-delay: 0.1s; }
+.stat-card:nth-child(2) { animation-delay: 0.2s; }
+.stat-card:nth-child(3) { animation-delay: 0.3s; }
+.stat-card:hover { transform: translateY(-3px); }
+.stat-icon {
+    width: 48px; height: 48px; border-radius: 14px; display: flex;
+    align-items: center; justify-content: center; font-size: 1.4rem; margin: 0 auto 0.75rem;
+}
+.stat-icon.gift { background: linear-gradient(135deg, #e8f8f5, #d1f2eb); }
+.stat-icon.credit { background: linear-gradient(135deg, #eaf2f8, #d4e6f1); }
+.stat-icon.club { background: linear-gradient(135deg, #fef9e7, #fcf3cf); }
+.stat-number { font-size: 2rem; font-weight: 700; color: #1a1a2e; line-height: 1.2; }
+.stat-label { font-size: 0.85rem; color: #888; margin-top: 0.2rem; }
+.stat-card .btn { margin-top: 0.75rem; font-size: 0.82rem; padding: 0.45rem 1rem; }
+
+.how-to-section { animation: fadeIn 0.6s ease; }
+.how-to-section h2 { font-size: 1.25rem; font-weight: 600; color: #1a1a2e; margin-bottom: 1rem; }
+.how-to-steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1rem; margin-bottom: 1.5rem; }
+.step-card {
+    background: #fff; border-radius: 14px; padding: 1.25rem;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05); display: flex; gap: 1rem; align-items: flex-start;
+}
+.step-number {
+    width: 36px; height: 36px; min-width: 36px;
+    background: linear-gradient(135deg, #1a1a2e, #16213e); color: #fff;
+    border-radius: 10px; display: flex; align-items: center; justify-content: center;
+    font-weight: 700; font-size: 0.9rem;
+}
+.step-text h3 { font-size: 0.95rem; font-weight: 600; color: #1a1a2e; margin-bottom: 0.2rem; }
+.step-text p { font-size: 0.85rem; color: #777; line-height: 1.5; }
+
+.whatsapp-cta {
+    background: linear-gradient(135deg, #25d366, #128c7e); border-radius: 14px;
+    padding: 1.5rem; color: #fff; display: flex; align-items: center;
+    justify-content: space-between; gap: 1rem; flex-wrap: wrap;
+}
+.whatsapp-cta-text h3 { font-size: 1.05rem; font-weight: 600; margin-bottom: 0.25rem; }
+.whatsapp-cta-text p { font-size: 0.88rem; opacity: 0.9; }
+.whatsapp-cta .btn { background: rgba(255,255,255,0.2); color: #fff; border: 2px solid rgba(255,255,255,0.4); white-space: nowrap; }
+.whatsapp-cta .btn:hover { background: rgba(255,255,255,0.3); }
+
+@media (max-width: 480px) {
+    .phone-input-group { flex-direction: column; }
+    .stats-grid { grid-template-columns: 1fr; }
+    .whatsapp-cta { flex-direction: column; text-align: center; }
+}
+{% endblock %}
+
+{% block content %}
+{% if not user %}
+<div class="login-container">
+    <div class="login-header">
+        <div class="login-icon">📱</div>
+        <h1>Welcome to Deals Bot</h1>
+        <p>
+            Enter your WhatsApp number to manage your deals preferences.
+            Then message the bot on WhatsApp with any store or restaurant name to get all available deals!
+        </p>
+    </div>
+
+    <div class="card">
+        <form method="POST" action="{{ url_for('index') }}">
+            <div class="form-group">
+                <label class="form-label">Phone Number</label>
+                <div class="phone-input-group">
+                    <span class="phone-prefix">+972</span>
+                    <input type="tel" name="phone" class="form-input" placeholder="50-123-4567" required autocomplete="tel">
+                </div>
+                <div class="login-hint">Enter without country code, e.g. 501234567</div>
+            </div>
+            <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 0.5rem;">
+                Connect
+            </button>
+        </form>
+    </div>
+</div>
+
+{% else %}
+<div class="dashboard-welcome">
+    <h1>Hello{% if user.name %}, {{ user.name }}{% endif %}! 👋</h1>
+    <p>Manage your deals preferences</p>
+</div>
+
+<div class="stats-grid">
+    <div class="stat-card">
+        <div class="stat-icon gift">🎁</div>
+        <div class="stat-number">{{ stats.gift_cards|default(0) }}</div>
+        <div class="stat-label">Gift Cards</div>
+        <a href="{{ url_for('manage') }}#gift-cards" class="btn btn-secondary">Manage</a>
+    </div>
+    <div class="stat-card">
+        <div class="stat-icon credit">💳</div>
+        <div class="stat-number">{{ stats.credit_cards|default(0) }}</div>
+        <div class="stat-label">Credit Cards</div>
+        <a href="{{ url_for('manage') }}#credit-cards" class="btn btn-secondary">Manage</a>
+    </div>
+    <div class="stat-card">
+        <div class="stat-icon club">⭐</div>
+        <div class="stat-number">{{ stats.consumer_clubs|default(0) }}</div>
+        <div class="stat-label">Consumer Clubs</div>
+        <a href="{{ url_for('manage') }}#clubs" class="btn btn-secondary">Manage</a>
+    </div>
+</div>
+
+<div class="how-to-section">
+    <h2>How It Works</h2>
+    <div class="how-to-steps">
+        <div class="step-card">
+            <div class="step-number">1</div>
+            <div class="step-text">
+                <h3>Set Up Your Profile</h3>
+                <p>Add your credit cards, gift cards, and consumer club memberships</p>
+            </div>
+        </div>
+        <div class="step-card">
+            <div class="step-number">2</div>
+            <div class="step-text">
+                <h3>Message the Bot</h3>
+                <p>Send a store or restaurant name on WhatsApp</p>
+            </div>
+        </div>
+        <div class="step-card">
+            <div class="step-number">3</div>
+            <div class="step-text">
+                <h3>Get Your Deals</h3>
+                <p>The bot returns all relevant deals personalized to your cards</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="whatsapp-cta">
+        <div class="whatsapp-cta-text">
+            <h3>Ready? Message the bot! 🚀</h3>
+            <p>Send any store name to get started</p>
+        </div>
+        <a href="#" class="btn">💬 Open WhatsApp</a>
+    </div>
+</div>
+{% endif %}
+{% endblock %}
